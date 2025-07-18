@@ -51,7 +51,7 @@ This generates detailed results in the `results/` directory comparing various ML
 
 I tested with S&P index data, which is probably the worst type of data for this. But this was intentional. One result outperformed the index buy/hold strategy:
 
-![Performance of Soliton-Enhanced Strategy](champion_strategy_performance.png)
+![Performance of Soliton-Enhanced Strategy](champion_soliton_strategy_performance.png)
 
 
 
