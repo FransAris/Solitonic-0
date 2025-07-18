@@ -49,6 +49,12 @@ This generates detailed results in the `results/` directory comparing various ML
 
 ## Results
 
+I tested with S&P index data, which is probably the worst type of data for this. But this was intentional. One result outperformed the index buy/hold strategy:
+
+![Soliton Strategy Performance](visualizations/outputs/champion_strategy_performance.png)
+
+
+
 The analysis tests multiple algorithms (Linear, Ridge, Random Forest, etc.) across different time horizons (1d, 3d, 5d) with various risk management strategies. Results are saved as:
 
 - `results/comprehensive_ml_results_enhanced.csv` - Full results
