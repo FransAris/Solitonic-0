@@ -1,0 +1,36 @@
+{
+  "feature_sets_tested": [
+    "SolitonCore",
+    "PostCollision",
+    "Traditional",
+    "Hybrid",
+    "BestFeatures"
+  ],
+  "total_strategies_tested": 270,
+  "algorithms_tested": [
+    "Linear",
+    "Ridge",
+    "RandomForest"
+  ],
+  "avg_excess_cagr_spx": -0.08085008152197301,
+  "best_calmar": 0.23098827465715568,
+  "risk_strategies_tested": [
+    "KellyCriterion",
+    "VolatilityTargeting",
+    "MaxDrawdownControl",
+    "VaRBased",
+    "RiskParity",
+    "ConservativeBalanced"
+  ],
+  "analysis_timestamp": "2025-05-25T02:13:57.690",
+  "best_sharpe": 0.0682058409917306,
+  "horizons_tested": [
+    1,
+    3,
+    5
+  ],
+  "best_excess_cagr_spx": 0.050835892813426486,
+  "data_period_years": 17.744010951403148,
+  "strategies_beating_6040": 1,
+  "strategies_beating_spx": 1
+}

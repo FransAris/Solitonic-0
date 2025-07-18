@@ -1,0 +1,42 @@
+name = "OscillatorSolitonHypothesis"
+uuid = "12345678-1234-1234-1234-123456789abc"
+authors = ["AI Pair Programmer"]
+version = "0.1.0"
+
+[deps]
+# Data IO
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Parquet = "626c502c-15b0-58ad-a749-f091afb673ae"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+DataFramesMeta = "1313f7d8-7da2-5740-9ea0-a2ca25f37964"
+Arrow = "69666777-d1a9-59fb-9406-91d4454c9d45"
+MarketTechnicals = "bdf69bea-06a4-5a9d-b8b4-a10c8d2e5c6c"
+RollingFunctions = "b0e4dd01-7b14-53d8-9b45-915ec17d9d54"
+
+# PDE / numerics
+DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+DiffEqOperators = "9fdde737-9c7f-11e9-0992-d5e9d1b4b6db"
+
+# Optional GPU / MPI placeholders
+CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
+MPI = "da04e1cc-30fd-572f-bb4f-1f8673147195"
+
+# ML / statistics
+MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
+MLJXGBoostInterface = "54119dfa-1dab-4055-be67-d1fb2120b5cc"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+
+# Experiment management
+DrWatson = "634d3b9d-ee7a-5ddf-bec9-22491ea816e1"
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+ProgressMeter = "92933f4c-e287-5a05-a399-4b506db050ca"
+
+# Utilities
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+RateLimit = "ffd44a85-b8d0-45c4-8940-7b84b6ba1ba7"
+Retry = "20febd7b-183b-5ae2-ac4a-720e7ce64774"
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+
+[compat]
+julia = "1.10" 
