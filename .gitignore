@@ -1,0 +1,128 @@
+# Julia
+Manifest.toml
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+deps/deps.jl
+deps/build.log
+deps/downloads/
+docs/build/
+docs/site/
+
+# Julia package development
+/dev/
+/.CondaPkg/
+
+# Data files (large datasets)
+*.csv
+*.parquet
+*.arrow
+*.h5
+*.hdf5
+*.feather
+*.pkl
+*.pickle
+
+# Results and outputs
+/results/
+/outputs/
+/plots/
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.html
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*~
+.#*
+
+# System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.#*
+\#*#
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Python (if any Python interop)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# R (if any R interop)
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+
+# Environment variables
+.env
+.env.local
+
+# Backup files
+*.backup
+*.bak
+*.orig
+
+# Compiled binaries
+*.exe
+*.dll
+*.dylib
+*.so
+
+# Archives
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+
+# Cursor
+.cursor/
+
+# Keep essential data structure but ignore actual data
+!data/processed/.gitkeep
+!data/raw/.gitkeep
+
+# Keep essential results structure but ignore actual results  
+!results/.gitkeep
+!visualizations/outputs/.gitkeep 

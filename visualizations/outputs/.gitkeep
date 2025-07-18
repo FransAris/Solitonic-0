@@ -1,0 +1,2 @@
+# This file ensures the visualizations/outputs directory is tracked in git
+# while the actual output files are ignored 
