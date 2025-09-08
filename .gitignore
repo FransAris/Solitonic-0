@@ -127,3 +127,5 @@ wheels/
 !results/.gitkeep
 !visualizations/outputs/.gitkeep 
 TRANSITION_TO_HIGH_FREQUENCY.md
+
+.DS_Store
