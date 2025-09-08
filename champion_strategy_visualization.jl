@@ -17,7 +17,7 @@ Random.seed!(42)
 
 # Load dataset
 df = DataFrame(Arrow.Table("data/processed/soliton_features_30years.arrow"))
-println("✅ Loaded $(nrow(df)) trading days")
+println("SUCCESS: Loaded $(nrow(df)) trading days")
 
 # Strategy configuration
 println("\nStrategy Configuration:")
@@ -223,7 +223,7 @@ if !isempty(strategy_values) && !isempty(spx_values)
     
     excess_cagr = strategy_cagr - spx_cagr
     
-    println("\n📊 PERFORMANCE COMPARISON:")
+    println("\nINFO: PERFORMANCE COMPARISON:")
     println("   Period: $(strategy_dates[1]) to $(strategy_dates[end]) ($(round(years, digits=1)) years)")
     println("   ")
     println("   🏆 CHAMPION SOLITON STRATEGY:")
@@ -231,17 +231,17 @@ if !isempty(strategy_values) && !isempty(spx_values)
     println("      Total Return: $(round(strategy_total_return*100, digits=1))%")
     println("      CAGR: $(round(strategy_cagr*100, digits=1))%")
     println("   ")
-    println("   📈 S&P 500 BUY & HOLD:")
+    println("   UP: S&P 500 BUY & HOLD:")
     println("      Final Value: \$$(round(spx_values[end], digits=0))")
     println("      Total Return: $(round(spx_total_return*100, digits=1))%")
     println("      CAGR: $(round(spx_cagr*100, digits=1))%")
     println("   ")
     println("   ⚡ EXCESS PERFORMANCE:")
     println("      Excess CAGR: $(round(excess_cagr*100, digits=1))%")
-    println("      Outperformance: $(excess_cagr > 0 ? "✅ WINNER!" : "❌ Underperformed")")
+    println("      Outperformance: $(excess_cagr > 0 ? "SUCCESS: WINNER!" : "FAILED: Underperformed")")
     
     # CREATE VISUALIZATION
-    println("\n📈 Creating performance visualization...")
+    println("\nUP: Creating performance visualization...")
     
     # Convert to percentage returns from initial capital
     strategy_pct = (strategy_values .- initial_capital) ./ initial_capital .* 100
@@ -274,14 +274,14 @@ if !isempty(strategy_values) && !isempty(spx_values)
     
     # Save plot
     savefig(p, "champion_soliton_strategy_performance.png")
-    println("   ✅ Chart saved: champion_soliton_strategy_performance.png")
+    println("   SUCCESS: Chart saved: champion_soliton_strategy_performance.png")
     
     # Also save as PDF for publication quality
     try
         savefig(p, "champion_soliton_strategy_performance.pdf")
-        println("   ✅ PDF saved: champion_soliton_strategy_performance.pdf")
+        println("   SUCCESS: PDF saved: champion_soliton_strategy_performance.pdf")
     catch
-        println("   ⚠️  PDF save failed (no problem)")
+        println("   WARNING:  PDF save failed (no problem)")
     end
     
     # Display the plot
@@ -298,10 +298,10 @@ if !isempty(strategy_values) && !isempty(spx_values)
     )
     
     Arrow.write("champion_strategy_results.arrow", results_df)
-    println("   ✅ Data saved: champion_strategy_results.arrow")
+    println("   SUCCESS: Data saved: champion_strategy_results.arrow")
     
 else
-    println("❌ No data generated for visualization")
+    println("FAILED: No data generated for visualization")
 end
 
 println("\nStrategy Visualization Complete!") 

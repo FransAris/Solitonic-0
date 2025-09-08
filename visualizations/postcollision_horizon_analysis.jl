@@ -7,7 +7,7 @@ at longer prediction horizons (1d, 3d, 5d)
 Clean visualization for S&P 500 returns
 """
 
-println("📈 POST-COLLISION FEATURE HORIZON ANALYSIS")
+println("UP: POST-COLLISION FEATURE HORIZON ANALYSIS")
 println("=" ^ 60)
 
 using Arrow, DataFrames, Statistics, LinearAlgebra
@@ -16,7 +16,7 @@ gr() # Use GR backend for clean plots
 
 # Load data
 df = DataFrame(Arrow.Table("../data/processed/soliton_features.arrow"))
-println("✅ Loaded $(nrow(df)) total samples")
+println("SUCCESS: Loaded $(nrow(df)) total samples")
 
 # Feature sets
 baseline_cols = ["RSI14", "StochK14", "CCI20", "MACDsig"]
@@ -29,13 +29,13 @@ horizons = [1, 3, 5]
 target_cols = ["ForwardReturn1d", "ForwardReturn3d", "ForwardReturn5d"]
 horizon_labels = ["1-Day", "3-Day", "5-Day"]
 
-println("\n🎯 Analyzing horizons: $(horizon_labels)")
+println("\nTARGET: Analyzing horizons: $(horizon_labels)")
 
 # Collect systematic data
 horizon_data = []
 
 for (horizon, target_col, label) in zip(horizons, target_cols, horizon_labels)
-    println("\n📊 Processing $label horizon...")
+    println("\nINFO: Processing $label horizon...")
     
     # Clean data
     df_clean = dropmissing(df, Symbol(target_col))
@@ -213,35 +213,35 @@ println("\n💾 Saving visualizations...")
 
 try
     savefig(p1, "soliton_asymmetryY_trend.png")
-    println("✅ Saved soliton_asymmetryY_trend.png")
+    println("SUCCESS: Saved soliton_asymmetryY_trend.png")
     
     savefig(p2, "feature_type_performance.png")
-    println("✅ Saved feature_type_performance.png")
+    println("SUCCESS: Saved feature_type_performance.png")
     
     savefig(p3, "enhancement_factor_trend.png")
-    println("✅ Saved enhancement_factor_trend.png")
+    println("SUCCESS: Saved enhancement_factor_trend.png")
     
     savefig(p5, "postcollision_vs_baseline.png")
-    println("✅ Saved postcollision_vs_baseline.png")
+    println("SUCCESS: Saved postcollision_vs_baseline.png")
     
     savefig(final_plot, "postcollision_comprehensive_analysis.png")
-    println("✅ Saved postcollision_comprehensive_analysis.png")
+    println("SUCCESS: Saved postcollision_comprehensive_analysis.png")
     
 catch e
-    println("⚠️  Could not save PNG files: $e")
+    println("WARNING:  Could not save PNG files: $e")
 end
 
 # Print summary insights
-println("\n🔍 KEY INSIGHTS:")
+println("\nSEARCH: KEY INSIGHTS:")
 println("-" ^ 40)
 
-println("📈 SolitonAsymmetryY Correlation Progression:")
+println("UP: SolitonAsymmetryY Correlation Progression:")
 for data in horizon_data
     println("  $(data.label): $(round(data.asymmetryY_corr, digits=4))")
 end
 
 increase_1_to_5 = ((horizon_data[3].asymmetryY_abs - horizon_data[1].asymmetryY_abs) / horizon_data[1].asymmetryY_abs) * 100
-println("\n🚀 SolitonAsymmetryY Improvement (1d → 5d): $(round(increase_1_to_5, digits=1))%")
+println("\nSTRONG SolitonAsymmetryY Improvement (1d → 5d): $(round(increase_1_to_5, digits=1))%")
 
 println("\n🌊 Enhancement Factors:")
 for data in horizon_data
@@ -249,18 +249,18 @@ for data in horizon_data
 end
 
 # Statistical significance test
-println("\n📊 Trend Analysis:")
+println("\nINFO: Trend Analysis:")
 correlation_trend = cor(horizons_numeric, asymmetryY_values)
 println("  SolitonAsymmetryY vs Horizon correlation: $(round(correlation_trend, digits=4))")
 
 if correlation_trend > 0.8
-    println("  🎯 STRONG POSITIVE TREND: Post-collision features become significantly more predictive!")
+    println("  TARGET: STRONG POSITIVE TREND: Post-collision features become significantly more predictive!")
 elseif correlation_trend > 0.5
-    println("  📈 MODERATE POSITIVE TREND: Clear improvement at longer horizons")
+    println("  UP: MODERATE POSITIVE TREND: Clear improvement at longer horizons")
 else
-    println("  ⚠️  WEAK TREND: Limited horizon dependency")
+    println("  WARNING:  WEAK TREND: Limited horizon dependency")
 end
 
-println("\n✅ Post-collision horizon analysis complete!")
+println("\nSUCCESS: Post-collision horizon analysis complete!")
 println("🔬 This supports the hypothesis that soliton post-collision dynamics")
 println("   capture longer-term market restructuring patterns.") 

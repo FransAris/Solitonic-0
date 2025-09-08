@@ -11,20 +11,20 @@ using Plots, LinearAlgebra, StatsBase
 # Use GR backend to avoid PlotlyJS issues
 gr()
 
-println("📊 Loading Soliton Feature Dataset...")
+println("INFO: Loading Soliton Feature Dataset...")
 
 # Load the processed features
 if !isfile("../data/processed/soliton_features.arrow")
-    println("❌ Run test_real_soliton.jl first to generate features!")
+    println("FAILED: Run test_real_soliton.jl first to generate features!")
     exit(1)
 end
 
 df = DataFrame(Arrow.Table("../data/processed/soliton_features.arrow"))
-println("✅ Loaded $(nrow(df)) feature vectors")
+println("SUCCESS: Loaded $(nrow(df)) feature vectors")
 
 # Focus on 1-day returns (HIGHEST R² = most predictable!)
 df_clean = dropmissing(df, :ForwardReturn1d)
-println("📈 Analyzing $(nrow(df_clean)) samples with 1-day forward returns (highest R²)")
+println("UP: Analyzing $(nrow(df_clean)) samples with 1-day forward returns (highest R²)")
 
 # Feature sets
 baseline_cols = ["RSI14", "StochK14", "CCI20", "MACDsig"]
@@ -88,10 +88,10 @@ soliton_model = train_model(soliton_cols, "Soliton Features")
 combined_model = train_model(combined_cols, "Combined (Baseline + Soliton)")
 
 enhancement = ((combined_model.r2 - baseline_model.r2) / abs(baseline_model.r2)) * 100
-println("🚀 Soliton Enhancement: +$(round(enhancement, digits=1))%")
+println("STRONG Soliton Enhancement: +$(round(enhancement, digits=1))%")
 
 # ===== PLOT 1: Time Series Performance =====
-println("📊 Creating time series visualization...")
+println("INFO: Creating time series visualization...")
 
 p1 = plot(dates, y * 100, 
          label="Actual 1-Day Returns", 
@@ -114,7 +114,7 @@ annotate!(p1, dates[end-200], maximum(y)*80,
               :blue, :bold, 14))
 
 # ===== PLOT 2: Prediction Accuracy Scatter =====
-println("📊 Creating accuracy scatter plots...")
+println("INFO: Creating accuracy scatter plots...")
 
 test_dates = dates[test_idx]
 y_test = y[test_idx]
@@ -139,7 +139,7 @@ p2 = plot(p2a, p2b, layout=(1,2), size=(1000, 400),
          plot_title="Prediction Accuracy: Out-of-Sample Test Set")
 
 # ===== PLOT 3: Signal Effectiveness Over Time =====
-println("📊 Creating signal effectiveness analysis...")
+println("INFO: Creating signal effectiveness analysis...")
 
 # Calculate rolling prediction errors
 window = 50
@@ -185,7 +185,7 @@ plot!(p3, rolling_dates[.!positive_mask], enhancement_rolling[.!positive_mask],
       label="Baseline Better")
 
 # ===== PLOT 4: Feature Importance =====
-println("📊 Creating feature importance analysis...")
+println("INFO: Creating feature importance analysis...")
 
 # Extract feature importance from coefficients
 feature_names = vcat(baseline_cols, soliton_cols, postcoll_cols)
@@ -213,7 +213,7 @@ end
 bar!(p4, feature_importance[sorted_idx], color=colors, orientation=:h)
 
 # ===== PLOT 5: Performance Summary Dashboard =====
-println("📊 Creating performance dashboard...")
+println("INFO: Creating performance dashboard...")
 
 metrics_data = [
     baseline_model.r2 * 100,
@@ -230,7 +230,7 @@ p5 = bar(["Baseline\nOscillators", "Soliton\nFeatures", "Combined\nModel"],
 
 # Add enhancement arrow
 annotate!(p5, 2.5, (metrics_data[1] + metrics_data[3])/2,
-         text("🚀 +$(round(enhancement, digits=1))%", :green, :bold, 16))
+         text("STRONG +$(round(enhancement, digits=1))%", :green, :bold, 16))
 
 # Add correlation info
 for (i, model) in enumerate([baseline_model, soliton_model, combined_model])
@@ -239,7 +239,7 @@ for (i, model) in enumerate([baseline_model, soliton_model, combined_model])
 end
 
 # ===== COMBINE ALL PLOTS =====
-println("📊 Assembling final visualization...")
+println("INFO: Assembling final visualization...")
 
 # Create the master layout
 final_plot = plot(
@@ -260,16 +260,16 @@ savefig(final_plot, "outputs/soliton_performance_dashboard.html")
 savefig(p1, "outputs/time_series_comparison.png")
 savefig(p3, "outputs/rolling_enhancement.png")
 
-println("✅ Visualizations saved:")
-println("   📊 outputs/soliton_performance_dashboard.html (interactive)")
-println("   📈 outputs/time_series_comparison.png")
-println("   📉 outputs/rolling_enhancement.png")
+println("SUCCESS: Visualizations saved:")
+println("   INFO: outputs/soliton_performance_dashboard.html (interactive)")
+println("   UP: outputs/time_series_comparison.png")
+println("   DOWN: outputs/rolling_enhancement.png")
 
 # ===== SUMMARY STATS =====
-println("\n🎯 Key Insights:")
-println("   📊 Baseline R²: $(round(baseline_model.r2, digits=4))")
+println("\nTARGET: Key Insights:")
+println("   INFO: Baseline R²: $(round(baseline_model.r2, digits=4))")
 println("   🌊 Combined R²: $(round(combined_model.r2, digits=4))")
-println("   🚀 Enhancement: +$(round(enhancement, digits=1))%")
+println("   STRONG Enhancement: +$(round(enhancement, digits=1))%")
 println("   ⏱️  Periods where soliton helps: $(round(100 * sum(positive_mask) / length(positive_mask), digits=1))%")
-println("   📈 Best enhancement period: +$(round(maximum(enhancement_rolling), digits=1))%")
-println("   📉 Worst period: $(round(minimum(enhancement_rolling), digits=1))%") 
+println("   UP: Best enhancement period: +$(round(maximum(enhancement_rolling), digits=1))%")
+println("   DOWN: Worst period: $(round(minimum(enhancement_rolling), digits=1))%") 

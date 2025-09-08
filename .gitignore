@@ -126,3 +126,4 @@ wheels/
 # Keep essential results structure but ignore actual results  
 !results/.gitkeep
 !visualizations/outputs/.gitkeep 
+TRANSITION_TO_HIGH_FREQUENCY.md

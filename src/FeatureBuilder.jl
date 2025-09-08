@@ -53,7 +53,7 @@ function build_features(price_df::DataFrame, vix_df::DataFrame=DataFrame();
                        vix_max_sample::Float64=50.0,
                        forward_days::Int=5)::DataFrame
     
-    println("🔧 Building soliton features from market data...")
+    println("TOOL: Building soliton features from market data...")
     println("   Price data: $(nrow(price_df)) rows")
     println("   VIX data: $(nrow(vix_df)) rows")
     println("   PDE params: grid=$grid, T=$T, λ=$λ, μmax=$μmax")
@@ -62,11 +62,11 @@ function build_features(price_df::DataFrame, vix_df::DataFrame=DataFrame();
     combined_df = _join_price_vix_data(price_df, vix_df)
     
     # Step 2: Compute oscillators and normalize
-    println("📈 Computing technical oscillators...")
+    println("UP: Computing technical oscillators...")
     osc_df = compute_oscillators(combined_df)
     
     # Step 3: Compute forward returns for ML target
-    println("🎯 Computing forward returns...")
+    println("TARGET: Computing forward returns...")
     target_df = _add_forward_returns(osc_df, forward_days)
     
     # Step 4: Filter rows with complete data (no NaN oscillators)
@@ -147,7 +147,7 @@ function build_features(price_df::DataFrame, vix_df::DataFrame=DataFrame();
     # Step 6: Convert to DataFrame
     features_df = DataFrame(feature_rows)
     
-    println("   ✅ Generated $(nrow(features_df)) feature rows")
+    println("   SUCCESS: Generated $(nrow(features_df)) feature rows")
     
     # Step 7: Save to Parquet for caching
     println("💾 Saving features to $output_file...")
@@ -171,7 +171,7 @@ function _join_price_vix_data(price_df::DataFrame, vix_df::DataFrame)::DataFrame
             return price_df
         else
             # Generate dummy VIX data
-            println("   ⚠️  No VIX data provided, using dummy values")
+            println("   WARNING:  No VIX data provided, using dummy values")
             combined_df = copy(price_df)
             combined_df.VIX = 20.0 .+ 10.0 .* randn(nrow(combined_df))  # VIX ~ N(20, 10²)
             combined_df.VIX = max.(combined_df.VIX, 5.0)  # Floor at 5
@@ -185,7 +185,7 @@ function _join_price_vix_data(price_df::DataFrame, vix_df::DataFrame)::DataFrame
     
     # Handle missing VIX values
     if any(ismissing, combined_df.VIX)
-        println("   ⚠️  Filling missing VIX values with interpolation")
+        println("   WARNING:  Filling missing VIX values with interpolation")
         combined_df.VIX = coalesce.(combined_df.VIX, 20.0)  # Simple fallback
     end
     
@@ -246,7 +246,7 @@ end
 Log summary statistics of generated features
 """
 function _log_feature_summary(features_df::DataFrame)
-    println("\n📊 Feature Summary:")
+    println("\nINFO: Feature Summary:")
     println("   Rows: $(nrow(features_df))")
     
     # Summary stats for key features

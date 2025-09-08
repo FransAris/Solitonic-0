@@ -8,16 +8,16 @@ Explores correlation vs R² and implements tree-based models
 using Arrow, DataFrames, Statistics, LinearAlgebra, StatsBase
 using Dates
 
-println("🚀 XGBoost Analysis: Soliton-Oscillator Enhancement")
+println("STRONG XGBoost Analysis: Soliton-Oscillator Enhancement")
 println("=" ^ 60)
 
 # Load data
 df = DataFrame(Arrow.Table("../data/processed/soliton_features.arrow"))
-println("✅ Loaded $(nrow(df)) feature vectors")
+println("SUCCESS: Loaded $(nrow(df)) feature vectors")
 
 # Focus on 1-day returns (highest R²)
 df_clean = dropmissing(df, :ForwardReturn1d)
-println("📊 Analyzing $(nrow(df_clean)) samples for 1-day returns")
+println("INFO: Analyzing $(nrow(df_clean)) samples for 1-day returns")
 
 # Feature sets
 baseline_cols = ["RSI14", "StochK14", "CCI20", "MACDsig"]
@@ -29,7 +29,7 @@ all_feature_cols = vcat(baseline_cols, soliton_cols, postcoll_cols)
 y = df_clean.ForwardReturn1d
 
 # ===== CORRELATION ANALYSIS =====
-println("\n🔍 CORRELATION vs R² ANALYSIS:")
+println("\nSEARCH: CORRELATION vs R² ANALYSIS:")
 println("-" ^ 60)
 
 println("Individual Feature Correlations with 1-Day Returns:")
@@ -39,7 +39,7 @@ for col in all_feature_cols
     r2_individual = corr_val^2
     push!(correlations, (feature=col, correlation=corr_val, r2_single=r2_individual))
     
-    status = abs(corr_val) > 0.3 ? "🔥 STRONG" : abs(corr_val) > 0.1 ? "✨ GOOD" : "⚪ WEAK"
+    status = abs(corr_val) > 0.3 ? "HOT: STRONG" : abs(corr_val) > 0.1 ? "GOOD GOOD" : "⚪ WEAK"
     println("  $col: ρ=$(round(corr_val, digits=3)), R²=$(round(r2_individual, digits=3)) $status")
 end
 
@@ -95,10 +95,10 @@ try
         return mean(predictions, dims=2)[:, 1]
     end
     
-    println("   ✅ Manual ensemble implemented")
+    println("   SUCCESS: Manual ensemble implemented")
     
 catch e
-    println("   ❌ Manual approach error: $e")
+    println("   FAILED: Manual approach error: $e")
 end
 
 # ===== TRAIN/TEST SPLIT =====
@@ -110,7 +110,7 @@ y_train = y[train_idx]
 y_test = y[test_idx]
 
 # ===== MODEL COMPARISON =====
-println("\n📊 MODEL COMPARISON:")
+println("\nINFO: MODEL COMPARISON:")
 println("-" ^ 60)
 
 models_results = []
@@ -160,7 +160,7 @@ try
     println("   R² = $(round(r2_ensemble, digits=4)), ρ = $(round(corr_ensemble, digits=4))")
     
 catch e
-    println("   ❌ Ensemble failed: $e")
+    println("   FAILED: Ensemble failed: $e")
 end
 
 # 4. Try installing and using actual XGBoost
@@ -171,7 +171,7 @@ try
     # Try to add XGBoost
     print("   Installing XGBoost... ")
     Pkg.add("XGBoost")
-    println("✅ Installed")
+    println("SUCCESS: Installed")
     
     using XGBoost
     
@@ -206,24 +206,24 @@ try
     println("   R² = $(round(r2_xgb, digits=4)), ρ = $(round(corr_xgb, digits=4))")
     
     # Feature importance
-    println("\n🎯 XGBoost Feature Importance:")
+    println("\nTARGET: XGBoost Feature Importance:")
     importance = XGBoost.importance(model, all_feature_cols)
     for (i, (feat, imp)) in enumerate(sort(collect(importance), by=x->x[2], rev=true)[1:5])
         println("   $i. $feat: $(round(imp, digits=3))")
     end
     
 catch e
-    println("   ❌ XGBoost failed: $e")
+    println("   FAILED: XGBoost failed: $e")
     println("   This is expected - XGBoost has complex dependencies")
 end
 
 # ===== FINAL ANALYSIS =====
-println("\n📊 FINAL MODEL COMPARISON:")
+println("\nINFO: FINAL MODEL COMPARISON:")
 println("=" ^ 60)
 
 for (i, result) in enumerate(models_results)
     enhancement = i > 1 ? ((result.r2 - models_results[1].r2) / abs(models_results[1].r2)) * 100 : 0.0
-    status = result.r2 > 0.02 ? "🚀 GOOD" : result.r2 > 0.01 ? "✨ OK" : "⚪ WEAK"
+    status = result.r2 > 0.02 ? "STRONG GOOD" : result.r2 > 0.01 ? "GOOD OK" : "⚪ WEAK"
     
     if i == 1
         println("$i. $(result.name): R²=$(round(result.r2, digits=4)), ρ=$(round(result.corr, digits=4)) $status (baseline)")
@@ -232,14 +232,14 @@ for (i, result) in enumerate(models_results)
     end
 end
 
-println("\n💡 KEY INSIGHTS:")
+println("\nTIP: KEY INSIGHTS:")
 println("=" ^ 60)
-println("🔍 Individual correlations ≠ overall R² due to:")
+println("SEARCH: Individual correlations ≠ overall R² due to:")
 println("   • Market noise (high variance in returns)")
 println("   • Feature multicollinearity") 
 println("   • Non-linear relationships")
 println("   • Model limitations")
-println("\n📈 Strong individual correlations (like SolitonConcentration +0.52) indicate:")
+println("\nUP: Strong individual correlations (like SolitonConcentration +0.52) indicate:")
 println("   • That feature captures real signal (R² ≈ 0.27 alone)")
 println("   • Potential for non-linear models to extract more value")
 println("   • Post-collision physics genuinely predicts market response")
@@ -252,4 +252,4 @@ println("   Individual R²: $(round(strongest.r2_single, digits=3)) ($(round(str
 println("   vs Combined Model R²: $(round(r2_combined, digits=4)) ($(round(r2_combined*100, digits=2))% variance explained)")
 
 improvement_potential = strongest.r2_single / r2_combined
-println("   🚀 Theoretical improvement potential: $(round(improvement_potential, digits=1))x if we could isolate the signal!") 
+println("   STRONG Theoretical improvement potential: $(round(improvement_potential, digits=1))x if we could isolate the signal!") 

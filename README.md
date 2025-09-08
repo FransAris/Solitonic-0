@@ -140,11 +140,12 @@ The analysis tests multiple algorithms (Linear, Ridge, Random Forest, etc.) acro
 
 ## Core Components
 
-- `src/Oscillators.jl` - Technical indicator computation
-- `src/SolitonPDE.jl` - Soliton wave PDE solver
+- `src/Oscillators_enhanced.jl` - Frequency-adaptive technical indicators
+- `src/SolitonPDE_adaptive.jl` - Adaptive soliton PDE solver
 - `src/FeatureBuilder.jl` - Feature extraction pipeline
-- `comprehensive_ml_trading_system_enhanced.jl` - Main analysis script
-- `champion_strategy_visualization.jl` - Visualization of best strategy
+- `scripts/batch_process_stocks.jl` - Batch data processing
+- `advanced_soliton_ml_trading.jl` - Advanced ML trading system
+- `online_learning_soliton_trading.jl` - Continuous learning system
 
 ## Limitations
 
@@ -157,26 +158,30 @@ The analysis tests multiple algorithms (Linear, Ridge, Random Forest, etc.) acro
 
 ```
 ├── src/                           # Core modules
-│   ├── OscillatorSolitonHypothesis.jl  # Main package module
-│   ├── Oscillators.jl                  # Technical oscillator computation
-│   ├── SolitonPDE.jl                   # Original PDE solver (complex)
-│   ├── SolitonPDE_simple.jl            # Simplified PDE solver (used)
-│   └── FeatureBuilder.jl               # Feature extraction pipeline
-├── scripts/                       # Data download utilities
-│   ├── download_spx_30years.jl         # 30-year S&P 500 data (main)
-│   ├── download_stooq_es.jl            # Alternative S&P 500 2022 data
-│   └── download_es.jl                  # ES futures Q1 2022 data
-├── comprehensive_ml_trading_system_enhanced.jl  # Main analysis script
-├── champion_strategy_visualization.jl            # Best strategy visualization
-├── test_30year_pipeline_fixed.jl                # Feature generation pipeline
-├── run_smoke_test.jl                            # Quick integration test
+│   ├── Oscillators_enhanced.jl        # Frequency-adaptive oscillators
+│   ├── SolitonPDE_adaptive.jl         # Adaptive PDE solver
+│   ├── FeatureBuilder.jl              # Feature extraction pipeline
+│   ├── Oscillators.jl                 # Legacy oscillator computation
+│   ├── SolitonPDE.jl                  # Original PDE solver
+│   └── SolitonPDE_simple.jl           # Simplified PDE solver
+├── scripts/                       # Data processing utilities
+│   ├── download_individual_stocks.jl  # High-frequency stock data
+│   ├── batch_process_stocks.jl        # Process raw data into features
+│   ├── select_diverse_stocks.jl       # Stock universe selection
+│   ├── download_spx_30years.jl        # Legacy S&P 500 data
+│   └── download_stooq_es.jl           # Alternative data sources
+├── advanced_soliton_ml_trading.jl     # Advanced ML trading system
+├── online_learning_soliton_trading.jl # Continuous learning system
+├── realistic_kelly_with_visualization.jl # Kelly criterion trading
+├── test_high_frequency_pipeline.jl    # High-frequency pipeline test
 ├── data/                          # Raw and processed data
+│   ├── raw/stocks/                    # Raw stock data files
+│   └── processed/                     # Per-stock feature files
 ├── results/                       # Analysis outputs
-├── visualizations/                # Plotting scripts
-├── notebooks/                     # Experimental analysis
+├── visualizations/                # Plotting scripts and outputs
 ├── test/                          # Unit tests
 ├── README.md                      # This file
-├── SETUP.md                       # Detailed setup instructions
+├── SETUP.md                       # Setup instructions
 └── Project.toml                   # Julia dependencies
 ```
 

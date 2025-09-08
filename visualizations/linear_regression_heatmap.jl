@@ -19,7 +19,7 @@ println("=" ^ 60)
 # Load data
 df = DataFrame(Arrow.Table("../data/processed/soliton_features.arrow"))
 df_clean = dropmissing(df, :ForwardReturn3d)
-println("✅ Loaded $(nrow(df_clean)) samples")
+println("SUCCESS: Loaded $(nrow(df_clean)) samples")
 
 # Feature definitions
 baseline_cols = ["RSI14", "StochK14", "CCI20", "MACDsig"]
@@ -44,7 +44,7 @@ for col in postcoll_cols
     feature_types[col] = "PostCollision"
 end
 
-println("\n📊 COMPUTING CORRELATIONS AND COEFFICIENTS...")
+println("\nINFO: COMPUTING CORRELATIONS AND COEFFICIENTS...")
 
 # 1. Correlation Heatmap: Features vs Target
 println("Computing feature-target correlations...")
@@ -279,41 +279,41 @@ println("\n💾 SAVING VISUALIZATIONS...")
 
 try
     savefig(p1, "feature_target_correlations.png")
-    println("✅ Saved feature_target_correlations.png")
+    println("SUCCESS: Saved feature_target_correlations.png")
     
     savefig(p2, "feature_correlation_matrix.png") 
-    println("✅ Saved feature_correlation_matrix.png")
+    println("SUCCESS: Saved feature_correlation_matrix.png")
     
     savefig(p3, "linear_coefficients.png")
-    println("✅ Saved linear_coefficients.png")
+    println("SUCCESS: Saved linear_coefficients.png")
     
     savefig(p4, "cuboid_from_above.png")
-    println("✅ Saved cuboid_from_above.png")
+    println("SUCCESS: Saved cuboid_from_above.png")
     
     savefig(p5, "feature_space_map.png")
-    println("✅ Saved feature_space_map.png")
+    println("SUCCESS: Saved feature_space_map.png")
     
     savefig(final_plot, "linear_regression_heatmap_comprehensive.png")
-    println("✅ Saved linear_regression_heatmap_comprehensive.png")
+    println("SUCCESS: Saved linear_regression_heatmap_comprehensive.png")
     
 catch e
-    println("⚠️  Could not save PNG files: $e")
+    println("WARNING:  Could not save PNG files: $e")
     println("Attempting HTML save...")
     
     try
         savefig(final_plot, "linear_regression_heatmap_comprehensive.html")
-        println("✅ Saved linear_regression_heatmap_comprehensive.html")
+        println("SUCCESS: Saved linear_regression_heatmap_comprehensive.html")
     catch e2
-        println("❌ Could not save HTML either: $e2")
+        println("FAILED: Could not save HTML either: $e2")
     end
 end
 
 # Print summary statistics
-println("\n📊 SUMMARY STATISTICS:")
+println("\nINFO: SUMMARY STATISTICS:")
 println("-" ^ 40)
 
 strongest_features = sort(feature_target_corr, by=x->abs(x.correlation), rev=true)[1:5]
-println("🎯 Top 5 Most Correlated Features:")
+println("TARGET: Top 5 Most Correlated Features:")
 for (i, f) in enumerate(strongest_features)
     println("  $i. $(f.feature) ($(f.type)): $(round(f.correlation, digits=4))")
 end
@@ -322,7 +322,7 @@ soliton_avg_corr = mean([abs(f.correlation) for f in feature_target_corr if f.ty
 baseline_avg_corr = mean([abs(f.correlation) for f in feature_target_corr if f.type == "Baseline"])
 postcoll_avg_corr = mean([abs(f.correlation) for f in feature_target_corr if f.type == "PostCollision"])
 
-println("\n📈 Average Absolute Correlations by Type:")
+println("\nUP: Average Absolute Correlations by Type:")
 println("  🔴 Baseline: $(round(baseline_avg_corr, digits=4))")
 println("  🔵 Soliton: $(round(soliton_avg_corr, digits=4))")
 println("  🟢 Post-Collision: $(round(postcoll_avg_corr, digits=4))")
@@ -330,5 +330,5 @@ println("  🟢 Post-Collision: $(round(postcoll_avg_corr, digits=4))")
 enhancement_factor = (soliton_avg_corr + postcoll_avg_corr) / baseline_avg_corr
 println("\n🌊 Soliton Enhancement Factor: $(round(enhancement_factor, digits=2))x")
 
-println("\n✅ Linear regression heatmap analysis complete!")
+println("\nSUCCESS: Linear regression heatmap analysis complete!")
 println("🎨 Check the generated PNG/HTML files for interactive visualizations") 

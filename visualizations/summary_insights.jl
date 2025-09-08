@@ -7,7 +7,7 @@ Corrects the analysis to properly show that 1-day returns are most predictable
 
 using Arrow, DataFrames, Statistics, LinearAlgebra
 
-println("🎯 SOLITON-OSCILLATOR MARKET HYPOTHESIS SUMMARY")
+println("TARGET: SOLITON-OSCILLATOR MARKET HYPOTHESIS SUMMARY")
 println("=" ^ 60)
 
 # Load data
@@ -61,7 +61,7 @@ end
 horizons = ["ForwardReturn1d", "ForwardReturn3d", "ForwardReturn5d", "ForwardReturn10d"]
 horizon_names = ["1-Day", "3-Day", "5-Day", "10-Day"]
 
-println("📊 PREDICTABILITY RANKING (by R²):")
+println("INFO: PREDICTABILITY RANKING (by R²):")
 println("-" ^ 60)
 
 results = []
@@ -71,10 +71,10 @@ for (horizon, name) in zip(horizons, horizon_names)
     
     if !isnan(result.baseline_r2)
         println("$name Returns:")
-        println("  📈 Baseline R²: $(round(result.baseline_r2, digits=4))")
+        println("  UP: Baseline R²: $(round(result.baseline_r2, digits=4))")
         println("  🌊 Combined R²: $(round(result.combined_r2, digits=4))")
-        println("  🚀 Enhancement: $(round(result.enhancement, digits=1))%")
-        println("  📊 Samples: $(result.n_samples)")
+        println("  STRONG Enhancement: $(round(result.enhancement, digits=1))%")
+        println("  INFO: Samples: $(result.n_samples)")
         println()
     end
 end
@@ -86,17 +86,17 @@ println("🏆 FINAL RANKING (Most to Least Predictable):")
 println("=" ^ 60)
 for (i, r) in enumerate(results)
     if !isnan(r.baseline_r2)
-        status = r.enhancement > 50 ? "🚀 STRONG" : r.enhancement > 10 ? "✨ GOOD" : "⚠️  WEAK"
+        status = r.enhancement > 50 ? "STRONG STRONG" : r.enhancement > 10 ? "GOOD GOOD" : "WARNING:  WEAK"
         println("$i. $(r.name): R²=$(round(r.baseline_r2, digits=4)) | Enhancement: $(round(r.enhancement, digits=1))% | $status")
     end
 end
 
-println("\n💡 KEY INSIGHTS:")
+println("\nTIP: KEY INSIGHTS:")
 println("=" ^ 60)
-println("✅ 1-day returns are MOST PREDICTABLE (highest R²)")
+println("SUCCESS: 1-day returns are MOST PREDICTABLE (highest R²)")
 println("🌊 Soliton physics enhances ALL short-term horizons")
-println("📉 Longer horizons (10-day) harder to predict due to market noise")
-println("🎯 Sweet spot: 1-3 day returns for oscillator-soliton signals")
+println("DOWN: Longer horizons (10-day) harder to predict due to market noise")
+println("TARGET: Sweet spot: 1-3 day returns for oscillator-soliton signals")
 println("⚡ Post-collision soliton features capture market response dynamics")
 
 best_result = results[1]

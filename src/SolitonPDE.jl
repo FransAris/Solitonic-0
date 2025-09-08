@@ -116,7 +116,7 @@ function simulate_soliton(amplitudes::NTuple{4,Float64}, vix::Float64;
     # TODO: Extract features
     features = _extract_features(u_final, x, y, z, grid, L)
     
-    println("   ✅ Simulation complete")
+    println("   SUCCESS: Simulation complete")
     
     return (
         H = features.H,
@@ -189,7 +189,7 @@ function _build_initial_conditions(amplitudes::NTuple{4,Float64}, x, y, z, L::Fl
         end
     end
     
-    println("   ✅ Initial conditions built with $(length(amplitudes)) pulses")
+    println("   SUCCESS: Initial conditions built with $(length(amplitudes)) pulses")
     
     return u0, u_dot0
 end
@@ -251,7 +251,7 @@ function _extract_features(u_final::Array{Float64,3}, x, y, z, grid::Int, L::Flo
     # TODO: This needs field_dot for kinetic energy - placeholder for now
     energy = sum(abs2, u_final) / length(u_final)  # Simple L2 norm
     
-    println("   📊 Features extracted: H=$H, energy=$energy")
+    println("   INFO: Features extracted: H=$H, energy=$energy")
     
     return (H=H, F=F, energy=energy)
 end

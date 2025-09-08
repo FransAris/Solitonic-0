@@ -18,7 +18,7 @@ println("=" ^ 60)
 # Load data
 df = DataFrame(Arrow.Table("../data/processed/soliton_features.arrow"))
 df_clean = dropmissing(df, :ForwardReturn3d)
-println("✅ Loaded $(nrow(df_clean)) samples")
+println("SUCCESS: Loaded $(nrow(df_clean)) samples")
 
 # Feature definitions
 baseline_cols = ["RSI14", "StochK14", "CCI20", "MACDsig"]
@@ -31,7 +31,7 @@ all_feature_cols = vcat(baseline_cols, soliton_cols, postcoll_cols)
 y = df_clean.ForwardReturn3d
 X_all = select(df_clean, all_feature_cols)
 
-println("\n📊 COMPUTING CORRELATIONS AND COEFFICIENTS...")
+println("\nINFO: COMPUTING CORRELATIONS AND COEFFICIENTS...")
 
 # 1. Feature-Target Correlations
 println("Computing feature-target correlations...")
@@ -195,26 +195,26 @@ println("\n💾 SAVING VISUALIZATIONS...")
 
 try
     savefig(p1, "feature_target_correlations.png")
-    println("✅ Saved feature_target_correlations.png")
+    println("SUCCESS: Saved feature_target_correlations.png")
     
     savefig(p2, "feature_correlation_matrix.png")
-    println("✅ Saved feature_correlation_matrix.png")
+    println("SUCCESS: Saved feature_correlation_matrix.png")
     
     savefig(p3, "linear_coefficients.png")
-    println("✅ Saved linear_coefficients.png")
+    println("SUCCESS: Saved linear_coefficients.png")
     
     savefig(p4, "cuboid_from_above.png")
-    println("✅ Saved cuboid_from_above.png")
+    println("SUCCESS: Saved cuboid_from_above.png")
     
     savefig(final_plot, "linear_regression_heatmap_comprehensive.png")
-    println("✅ Saved linear_regression_heatmap_comprehensive.png")
+    println("SUCCESS: Saved linear_regression_heatmap_comprehensive.png")
     
 catch e
-    println("⚠️  Could not save PNG files: $e")
+    println("WARNING:  Could not save PNG files: $e")
 end
 
 # Print summary statistics
-println("\n📊 SUMMARY STATISTICS:")
+println("\nINFO: SUMMARY STATISTICS:")
 println("-" ^ 40)
 
 # Find feature types
@@ -222,7 +222,7 @@ baseline_indices = [i for (i, name) in enumerate(feature_names) if name in basel
 soliton_indices = [i for (i, name) in enumerate(feature_names) if name in soliton_cols]
 postcoll_indices = [i for (i, name) in enumerate(feature_names) if name in postcoll_cols]
 
-println("🎯 Top 5 Most Correlated Features:")
+println("TARGET: Top 5 Most Correlated Features:")
 sorted_indices = sortperm(abs.(correlations), rev=true)
 for i in 1:min(5, length(sorted_indices))
     idx = sorted_indices[i]
@@ -240,7 +240,7 @@ baseline_avg_corr = mean([abs(correlations[i]) for i in baseline_indices])
 soliton_avg_corr = mean([abs(correlations[i]) for i in soliton_indices])
 postcoll_avg_corr = mean([abs(correlations[i]) for i in postcoll_indices])
 
-println("\n📈 Average Absolute Correlations by Type:")
+println("\nUP: Average Absolute Correlations by Type:")
 println("  🔴 Baseline: $(round(baseline_avg_corr, digits=4))")
 println("  🔵 Soliton: $(round(soliton_avg_corr, digits=4))")
 println("  🟢 Post-Collision: $(round(postcoll_avg_corr, digits=4))")
@@ -248,5 +248,5 @@ println("  🟢 Post-Collision: $(round(postcoll_avg_corr, digits=4))")
 enhancement_factor = (soliton_avg_corr + postcoll_avg_corr) / baseline_avg_corr
 println("\n🌊 Soliton Enhancement Factor: $(round(enhancement_factor, digits=2))x")
 
-println("\n✅ Linear regression heatmap analysis complete!")
+println("\nSUCCESS: Linear regression heatmap analysis complete!")
 println("🎨 Check the generated PNG files for visualizations") 

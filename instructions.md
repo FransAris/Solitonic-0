@@ -71,7 +71,7 @@ Write a Julia script `scripts/download_es.jl` that:
 Include retry (max 3) and polite rate-limit (sleep 1 s between tries).
 
 ─────────────────────────
-📈 4. Oscillator Module
+UP: 4. Oscillator Module
 ─────────────────────────
 Create `src/Oscillators.jl` exposing
 
@@ -148,7 +148,7 @@ println(e)
 Plot residuals.
 
 ─────────────────────────
-✅ 8. Tasks for You, AI-IDE
+SUCCESS: 8. Tasks for You, AI-IDE
 ─────────────────────────
 
     Generate Project.toml with the exact package list and ]instantiate.

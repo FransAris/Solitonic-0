@@ -43,7 +43,7 @@ using .Oscillators
             @test col in names(result_df)
         end
         
-        println("✅ Basic oscillator computation test passed")
+        println("SUCCESS: Basic oscillator computation test passed")
     end
     
     @testset "Normalization Tests" begin
@@ -85,7 +85,7 @@ using .Oscillators
             if !isempty(valid_values)
                 @test all(valid_values .>= -1.0)
                 @test all(valid_values .<= 1.0)
-                println("✅ $col normalization bounds test passed")
+                println("SUCCESS: $col normalization bounds test passed")
             end
         end
     end
@@ -109,7 +109,7 @@ using .Oscillators
         @test all(result_df.CCI20 .== 0.0)
         @test all(result_df.MACDsig .== 0.0)
         
-        println("✅ Insufficient data test passed")
+        println("SUCCESS: Insufficient data test passed")
         
         # Test with missing columns
         incomplete_df = DataFrame(
@@ -121,7 +121,7 @@ using .Oscillators
         )
         
         @test_throws ErrorException compute_oscillators(incomplete_df)
-        println("✅ Missing columns test passed")
+        println("SUCCESS: Missing columns test passed")
         
         # Test with constant prices (no variation)
         constant_df = DataFrame(
@@ -146,7 +146,7 @@ using .Oscillators
             end
         end
         
-        println("✅ Constant prices test passed")
+        println("SUCCESS: Constant prices test passed")
     end
     
     @testset "Internal Functions" begin
@@ -159,7 +159,7 @@ using .Oscillators
         @test !isnan(rsi_result[5])
         @test rsi_result[5] >= 0.0 && rsi_result[5] <= 100.0
         
-        println("✅ RSI calculation test passed")
+        println("SUCCESS: RSI calculation test passed")
         
         # Test normalization function
         test_values = [10.0, 20.0, 30.0, 40.0, 50.0]
@@ -169,7 +169,7 @@ using .Oscillators
         @test maximum(normalized) ≈ 1.0
         @test length(normalized) == length(test_values)
         
-        println("✅ Normalization function test passed")
+        println("SUCCESS: Normalization function test passed")
         
         # Test with NaN values
         test_with_nan = [10.0, NaN, 30.0, 40.0, NaN]
@@ -181,8 +181,8 @@ using .Oscillators
         @test !isnan(normalized_with_nan[3])
         @test !isnan(normalized_with_nan[4])
         
-        println("✅ NaN handling test passed")
+        println("SUCCESS: NaN handling test passed")
     end
 end
 
-println("\n🎉 All Oscillator tests completed!") 
+println("\nSUCCESS: All Oscillator tests completed!") 
